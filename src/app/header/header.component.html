@@ -1,0 +1,102 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-primary">
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+    aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav ml-auto">
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true"
+          aria-expanded="false">
+          <span style="color:white">Sort Data</span>
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item" href="javascript:void(0);" (click)="sortByAtoZ()">Name A-Z</a>
+          <a class="dropdown-item" href="javascript:void(0);" (click)="sortByZtoA()">Name Z-A</a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" href="javascript:void(0);" (click)="sortByRankUp()">Rank Up</a>
+          <a class="dropdown-item" href="javascript:void(0);" (click)="sortByRankDown()">Rank Down</a>
+        </div>
+      </li>
+    </ul>
+    <ul class="navbar-nav ml-auto">
+
+      <li class="nav-item">
+        <form class="form-inline my-2 my-lg-0">
+          <input class="form-control mr-sm-2" name="userInput" (keyup)="onKey($event)" [(ngModel)]="userInput" type="search" placeholder="Search"
+            aria-label="Search">
+        </form>
+      </li>
+    </ul>
+    <ul class="navbar-nav ml-auto"></ul>
+  </div>
+</nav>
+<ngx-spinner bdColor="rgba(51, 51, 51, 0.8)" size="large" color="#fff" type="timer"></ngx-spinner>
+
+<div class="flexBox" style="
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;">
+  <div *ngIf="allUserDetails.items!=null && allUserDetails.items.length>0">
+    <div class="row coditas-theme" *ngFor="let i of allUserDetails.items | paginate: { itemsPerPage: 5, currentPage: infoPage };let p=index">
+
+      <div class="col-md-3">
+        <img src="{{i.avatar_url}}" class="rounded-circle" alt="Smiley face" width="100" height="100">
+      </div>
+      <div class="col-md-9">
+        <div class="row">
+          <div class="col-md-12">
+
+
+            <b>Name:</b>{{i.login}}
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+
+            <b>Url:</b> {{i.url}}
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <b>Id:</b>{{i.id}}
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+            <b>Score:</b>{{i.score}}
+          </div>
+
+
+          <div class="col-md-6">
+            <button class="btn btn-primary float-right" type="button" data-toggle="collapse" [attr.data-target]="'#collapseExample'+p"
+              aria-expanded="false" aria-controls="collapseExample">
+              Details
+            </button>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-12">
+            <div class="collapse" [attr.id]="'collapseExample'+p">
+              <div class="card card-body">
+
+
+                <b> Followers Url:</b>{{i.followers_url}}
+                <br>
+                <b>Following Url:</b>{{i.following_url}}
+                <br>
+                <b>Type:</b>{{i.type}}
+                <br>
+                <b>Is Admin:</b>{{i.site_admin}}
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <pagination-controls (pageChange)="infoPage = $event"></pagination-controls>
+  </div>
+</div>
